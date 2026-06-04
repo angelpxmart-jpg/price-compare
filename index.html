@@ -345,7 +345,9 @@ async function searchPlatform(productName, platform) {
   const domains = { momo: "momo.com.tw", shopee: "shopee.tw" };
   // Strip Chinese brackets and special chars before searching
   const cleanName = productName.replace(/[【】《》〔〕〈〉「」『』（）()｛｝{}]/g, " ").replace(/\s+/g, " ").trim();
-  const query = `${cleanName} site:${domains[platform]}`;
+  const suffixes = { momo: "momo購物 售價", shopee: "蝦皮購物 售價" };
+  // Quoted name = exact match; no site: so comparison sites (BigGo, 飛比) appear and they DO show prices in snippets
+  const query = `"${cleanName}" ${suffixes[platform]}`;
 
   try {
     const resp = await fetch(SEARCH_URL, {
