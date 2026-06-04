@@ -339,6 +339,11 @@ function parseBoxCount(name) {
   return m ? parseInt(m[1], 10) : 1;
 }
 
+// 搜尋 BigGo 時去掉盒數，讓所有規格都能被找到
+function stripBoxCount(name) {
+  return name.replace(/[xX×]?\s*\d+\s*盒/g, "").replace(/\s+/g, " ").trim();
+}
+
 function parseProducts(text) {
   return text.split("\n")
     .map(l => l.trim())
@@ -356,7 +361,7 @@ function parseProducts(text) {
 
 // ---- BigGo 搜尋 ----
 async function searchBigGo(productName) {
-  const url = "https://biggo.com.tw/s/" + encodeURIComponent(productName);
+  const url = "https://biggo.com.tw/s/" + encodeURIComponent(stripBoxCount(productName));
   try {
     const resp = await fetch(SCRAPE_URL, {
       method: "POST",
