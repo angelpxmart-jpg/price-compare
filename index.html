@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>競品比價工具</title>
+<title>全電商定價情報系統</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -18,24 +18,18 @@ body {
 .screen { display: none; }
 .screen.active { display: block; }
 
-/* ---- Input Screen ---- */
 .container {
   max-width: 660px;
   margin: 64px auto;
   padding: 0 24px 80px;
 }
 .container.wide {
-  max-width: 1160px;
+  max-width: 1280px;
   margin: 36px auto;
   padding: 0 24px 80px;
 }
 
-.brand-dots {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  margin-bottom: 12px;
-}
+.brand-dots { display: flex; gap: 6px; align-items: center; margin-bottom: 12px; }
 .dot { width: 10px; height: 10px; border-radius: 50%; }
 
 h1 { font-size: 26px; font-weight: 700; color: #13227f; }
@@ -56,12 +50,7 @@ h1 { font-size: 26px; font-weight: 700; color: #13227f; }
   letter-spacing: 0.6px;
   margin-bottom: 10px;
 }
-.format-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 7px;
-}
+.format-row { display: flex; align-items: center; gap: 12px; margin-bottom: 7px; }
 .format-row:last-child { margin-bottom: 0; }
 code {
   background: white;
@@ -74,7 +63,7 @@ code {
   white-space: nowrap;
 }
 .format-note { color: #666; font-size: 12px; }
-.format-tip { margin-top: 10px; font-size: 12px; color: #888; line-height: 1.5; }
+.format-tip { margin-top: 10px; font-size: 12px; color: #888; line-height: 1.6; }
 
 textarea {
   width: 100%;
@@ -110,7 +99,7 @@ textarea:focus { outline: none; border-color: #13227f; }
 
 .hint-cmd { text-align: center; margin-top: 10px; font-size: 12px; color: #aaa; }
 
-/* ---- Result Screen ---- */
+/* Result Header */
 .result-header {
   display: flex;
   align-items: center;
@@ -118,7 +107,6 @@ textarea:focus { outline: none; border-color: #13227f; }
   margin-bottom: 20px;
   flex-wrap: wrap;
 }
-
 .btn-back {
   padding: 8px 16px;
   background: white;
@@ -131,9 +119,7 @@ textarea:focus { outline: none; border-color: #13227f; }
   white-space: nowrap;
 }
 .btn-back:hover { background: #f0f2f8; }
-
 .result-header h1 { font-size: 20px; }
-
 .meta-time { color: #aaa; font-size: 13px; margin-left: auto; }
 
 /* Progress */
@@ -161,53 +147,53 @@ textarea:focus { outline: none; border-color: #13227f; }
   overflow: auto;
   box-shadow: 0 2px 20px rgba(0,0,0,0.07);
 }
-table { width: 100%; border-collapse: collapse; min-width: 640px; }
+table { width: 100%; border-collapse: collapse; min-width: 900px; }
 thead tr { background: #13227f; }
 thead th {
   color: white;
-  padding: 13px 16px;
+  padding: 12px 16px;
   text-align: left;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.3px;
   white-space: nowrap;
+  line-height: 1.5;
 }
+thead th.th-px { background: #0d1b6e; }
+
 tbody tr { border-bottom: 1px solid #f0f3fa; transition: background 0.1s; }
 tbody tr:last-child { border-bottom: none; }
 tbody tr:hover { background: #f6f8ff; }
 td { padding: 13px 16px; vertical-align: middle; }
 
-.col-name { font-weight: 600; max-width: 220px; line-height: 1.4; }
-.col-price { white-space: nowrap; font-size: 15px; }
-.col-price a { font-weight: 700; text-decoration: none; }
-.col-price a:hover { text-decoration: underline; }
-.col-px { white-space: nowrap; font-weight: 700; font-size: 15px; color: #13227f; }
-.col-suggest { font-size: 12.5px; color: #444; line-height: 1.6; min-width: 180px; }
-.no-price { color: #c0c7db; }
+.col-name { font-weight: 600; max-width: 200px; line-height: 1.4; font-size: 13px; }
+
+.unit-price { font-size: 16px; font-weight: 700; }
+.unit-px { color: #13227f; }
+.unit-sub { font-size: 11px; color: #aaa; margin-top: 2px; }
+.no-data { color: #ccc; font-size: 13px; }
 
 .badge {
   display: inline-block;
-  padding: 3px 9px;
+  padding: 3px 10px;
   border-radius: 20px;
   font-size: 11px;
   font-weight: 700;
   white-space: nowrap;
-  vertical-align: middle;
 }
 .badge-win   { background: #e6f9ed; color: #1a7a3a; }
 .badge-lose  { background: #fff0f1; color: #c0392b; }
-.badge-close { background: #f0f0f0; color: #666; }
+.badge-close { background: #fffbe6; color: #a07000; }
 .badge-miss  { background: #fafafa; color: #bbb; border: 1px solid #eee; }
 
-/* Skeleton loading */
+.suggest-detail { font-size: 11.5px; color: #666; margin-top: 4px; line-height: 1.5; }
+
 @keyframes shimmer {
   0%   { background-position: -200% 0; }
   100% { background-position:  200% 0; }
 }
 .skeleton {
-  height: 16px;
-  width: 80px;
-  border-radius: 4px;
+  height: 16px; width: 70px; border-radius: 4px;
   background: linear-gradient(90deg, #eff1fa 25%, #e5e8f5 50%, #eff1fa 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
@@ -231,29 +217,26 @@ td { padding: 13px 16px; vertical-align: middle; }
       <div class="dot" style="background:#13227f;"></div>
       <div class="dot" style="background:#e40011;width:8px;height:8px;"></div>
     </div>
-    <h1>競品比價工具</h1>
-    <p class="subtitle">輸入商品清單，自動查詢 momo 與蝦皮售價</p>
+    <h1>全電商定價情報系統</h1>
+    <p class="subtitle">透過 BigGo 比較各平台單價，協助 JBP 議價決策</p>
 
     <div class="format-card">
       <div class="format-title">輸入格式</div>
       <div class="format-row">
-        <code>商品名稱</code>
-        <span class="format-note">僅比較競品（momo vs 蝦皮）</span>
-      </div>
-      <div class="format-row">
         <code>商品名稱|全電商售價</code>
-        <span class="format-note">加入全電商做三方比較</span>
+        <span class="format-note">自動換算單價並與各平台比較</span>
       </div>
       <p class="format-tip">
-        💡 商品名稱建議含 品牌 + 品名 + 規格，搜尋更準確<br>
-        例：<code style="font-size:11px;">CONSOFY 抽取衛生紙 120抽 24包|299</code>
+        💡 商品名稱建議含 品牌 + 品名 + 規格（含盒數），搜尋更準確<br>
+        例：<code style="font-size:11px;">飲后 超孅飲 奇異果 6盒|2851</code><br>
+        📊 比較平台：momo、PChome、Yahoo、蝦皮商城（每個商品約 5 Credits）
       </p>
     </div>
 
     <textarea
       id="productInput"
       rows="10"
-      placeholder="範例（每行一個商品，最多建議 10 個）：&#10;&#10;CONSOFY 抽取衛生紙 120抽 24包|299&#10;ONEDER 溫和潔淨沐浴乳 1000ml|189&#10;花仙子 好神拖拖把組|499"
+      placeholder="範例（每行一個商品）：&#10;&#10;飲后 超孅飲 奇異果 6盒|2851&#10;CONSOFY 抽取衛生紙 120抽 24包|299&#10;花仙子 好神拖拖把組|499"
     ></textarea>
     <button id="searchBtn" class="btn-primary">開始搜尋</button>
     <p class="hint-cmd">Mac 可用 ⌘ + Enter 快速開始搜尋</p>
@@ -265,7 +248,7 @@ td { padding: 13px 16px; vertical-align: middle; }
   <div class="container wide">
     <div class="result-header">
       <button id="backBtn" class="btn-back">← 重新搜尋</button>
-      <h1>比價結果</h1>
+      <h1>定價情報報表</h1>
       <span id="resultTime" class="meta-time"></span>
     </div>
 
@@ -278,21 +261,49 @@ td { padding: 13px 16px; vertical-align: middle; }
 
     <div class="table-wrap">
       <table>
-        <thead><tr id="tableHeader"></tr></thead>
+        <thead>
+          <tr>
+            <th>商品名稱</th>
+            <th class="th-px">全電商<br><span style="font-weight:400;font-size:10px;">單價 / 盒</span></th>
+            <th>momo<br><span style="font-weight:400;font-size:10px;">單價 / 盒</span></th>
+            <th>PChome<br><span style="font-weight:400;font-size:10px;">單價 / 盒</span></th>
+            <th>Yahoo<br><span style="font-weight:400;font-size:10px;">單價 / 盒</span></th>
+            <th>蝦皮商城<br><span style="font-weight:400;font-size:10px;">單價 / 盒</span></th>
+            <th>競爭力</th>
+          </tr>
+        </thead>
         <tbody id="tableBody"></tbody>
       </table>
     </div>
 
     <p class="disclaimer">
-      ⚠️ 資料來源：網路搜尋摘要，僅供參考。請點擊連結至各平台確認實際售價與規格。
+      資料來源：BigGo 比價網 ｜ 單價 = 各平台最低總價 ÷ 盒數 ｜ 蝦皮商城僅含官方品牌館
     </p>
   </div>
 </div>
 
 <script>
-// ---- Config ----
 const API_KEY    = "fc-a5fa632347524872a88bdea3d27da5d0";
-const SEARCH_URL = "https://api.firecrawl.dev/v1/search";
+const SCRAPE_URL = "https://api.firecrawl.dev/v1/scrape";
+
+// BigGo 平台名稱對應 key
+const PLATFORM_KEYS = {
+  "momo購物網":     "momo",
+  "momo":           "momo",
+  "PChome 24h購物": "pchome",
+  "PChome":         "pchome",
+  "Yahoo購物中心":  "yahoo",
+  "Yahoo購物":      "yahoo",
+  "Yahoo":          "yahoo",
+  "蝦皮商城":       "shopee_mall",
+};
+
+const PLATFORM_ORDER = [
+  { key: "momo",        label: "momo" },
+  { key: "pchome",      label: "PChome" },
+  { key: "yahoo",       label: "Yahoo" },
+  { key: "shopee_mall", label: "蝦皮商城" },
+];
 
 // ---- DOM ----
 const screenInput  = document.getElementById("screen-input");
@@ -300,13 +311,11 @@ const screenResult = document.getElementById("screen-result");
 const productInput = document.getElementById("productInput");
 const searchBtn    = document.getElementById("searchBtn");
 const backBtn      = document.getElementById("backBtn");
-const tableHeader  = document.getElementById("tableHeader");
 const tableBody    = document.getElementById("tableBody");
 const progressFill = document.getElementById("progressFill");
 const progressText = document.getElementById("progressText");
 const resultTime   = document.getElementById("resultTime");
 
-// ---- Screen switch ----
 function showScreen(name) {
   [screenInput, screenResult].forEach(s => s.classList.remove("active"));
   document.getElementById("screen-" + name).classList.add("active");
@@ -319,139 +328,127 @@ backBtn.addEventListener("click", () => {
   searchBtn.textContent = "開始搜尋";
 });
 
-// ---- Keyboard shortcut ----
 productInput.addEventListener("keydown", e => {
   if ((e.metaKey || e.ctrlKey) && e.key === "Enter") startSearch();
 });
-
 searchBtn.addEventListener("click", startSearch);
 
 // ---- Parse input ----
+function parseBoxCount(name) {
+  const m = name.match(/[xX×]?\s*(\d+)\s*盒/);
+  return m ? parseInt(m[1], 10) : 1;
+}
+
 function parseProducts(text) {
   return text.split("\n")
     .map(l => l.trim())
     .filter(l => l && !l.startsWith("#"))
     .map(l => {
       const [namePart, pricePart] = l.split("|");
-      const name = namePart.trim();
-      const pxPrice = pricePart ? parseInt(pricePart.trim(), 10) : null;
-      return { name, pxPrice: isNaN(pxPrice) ? null : pxPrice };
+      const name     = namePart.trim();
+      const pxTotal  = pricePart ? parseInt(pricePart.trim(), 10) : null;
+      const boxCount = parseBoxCount(name);
+      const pxUnit   = (pxTotal && !isNaN(pxTotal)) ? Math.round(pxTotal / boxCount) : null;
+      return { name, pxTotal: isNaN(pxTotal) ? null : pxTotal, pxUnit, boxCount };
     })
     .filter(p => p.name);
 }
 
-// ---- Firecrawl search ----
-async function searchPlatform(productName, platform) {
-  const domains = { momo: "momo.com.tw", shopee: "shopee.tw" };
-  // Strip Chinese brackets and special chars before searching
-  const cleanName = productName.replace(/[【】《》〔〕〈〉「」『』（）()｛｝{}]/g, " ").replace(/\s+/g, " ").trim();
-  const suffixes = { momo: "momo購物 售價", shopee: "蝦皮購物 售價" };
-  // Quoted name = exact match; no site: so comparison sites (BigGo, 飛比) appear and they DO show prices in snippets
-  const query = `"${cleanName}" ${suffixes[platform]}`;
-
+// ---- BigGo 搜尋 ----
+async function searchBigGo(productName) {
+  const url = "https://biggo.com.tw/s/" + encodeURIComponent(productName);
   try {
-    const resp = await fetch(SEARCH_URL, {
+    const resp = await fetch(SCRAPE_URL, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${API_KEY}`,
+        "Authorization": "Bearer " + API_KEY,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ query, limit: 5 })
+      body: JSON.stringify({
+        url,
+        formats: ["json"],
+        jsonOptions: {
+          prompt: "列出頁面上所有商品，包含：商品名稱、平台名稱（如 momo購物網、PChome 24h購物、Yahoo購物中心、蝦皮商城、蝦皮購物、全聯等）、售價數字（不含符號）、盒數（從商品名稱解析，如6盒→6、4盒→4、2盒→2，若無盒數描述則為1）",
+          schema: {
+            type: "object",
+            properties: {
+              products: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    product_name:  { type: "string" },
+                    platform_name: { type: "string" },
+                    sale_price:    { type: "number" },
+                    box_count:     { type: "number" }
+                  },
+                  required: ["product_name", "platform_name", "sale_price", "box_count"]
+                }
+              }
+            }
+          }
+        },
+        waitFor: 3000
+      })
     });
     if (!resp.ok) throw new Error("HTTP " + resp.status);
     const data = await resp.json();
-    return extractBestPrice(data.data || []);
+    return data.data?.json?.products || [];
   } catch (err) {
-    return { price: null, text: "搜尋失敗", url: "", title: String(err) };
+    console.error("BigGo error:", err);
+    return [];
   }
 }
 
-// ---- Extract lowest price from search snippets ----
-function extractBestPrice(results) {
-  const candidates = [];
-
-  for (const item of results) {
-    const text  = (item.title || "") + " " + (item.description || "");
-    const url   = item.url   || "";
-    const title = (item.title || "").substring(0, 60);
-
-    for (const m of [...text.matchAll(/\$([\d,]+)/g)]) {
-      const n = parseInt(m[1].replace(/,/g, ""), 10);
-      if (n >= 10 && n <= 200000) candidates.push({ price: n, text: `NT$${m[1]}`, url, title });
-    }
-    for (const m of [...text.matchAll(/NT\$\s*([\d,]+)/g)]) {
-      const n = parseInt(m[1].replace(/,/g, ""), 10);
-      if (n >= 10 && n <= 200000) candidates.push({ price: n, text: `NT$${m[1]}`, url, title });
-    }
-    for (const m of [...text.matchAll(/(?:售價|特價|優惠價)[：:\s]*([\d,]+)\s*元/g)]) {
-      const n = parseInt(m[1].replace(/,/g, ""), 10);
-      if (n >= 10 && n <= 200000) candidates.push({ price: n, text: `NT$${m[1]}`, url, title });
+// ---- 轉換為平台 Map（每平台取最低單價）----
+function buildPlatformMap(products) {
+  const map = {};
+  for (const p of products) {
+    const key = PLATFORM_KEYS[p.platform_name];
+    if (!key) continue; // 略過蝦皮購物、全聯等
+    const boxCount  = Math.max(1, p.box_count || 1);
+    const unitPrice = Math.round(p.sale_price / boxCount);
+    if (!map[key] || unitPrice < map[key].unitPrice) {
+      map[key] = {
+        unitPrice,
+        totalPrice: p.sale_price,
+        boxCount,
+        productName: p.product_name
+      };
     }
   }
-
-  if (candidates.length === 0) {
-    const first = results[0] || {};
-    return {
-      price: null,
-      text: "未找到價格",
-      url: first.url || "",
-      title: (first.title || "").substring(0, 60)
-    };
-  }
-  // Return lowest price (typically the promotional price)
-  return candidates.reduce((min, c) => c.price < min.price ? c : min);
+  return map;
 }
 
-// ---- Render price cell ----
-function priceCell(data, color) {
-  if (!data || data.price === null) {
-    return `<td class="col-price"><span class="no-price">—</span></td>`;
+// ---- 競爭力分析 ----
+function buildCompetition(pxUnit, platformMap) {
+  if (pxUnit === null) return null;
+
+  const all = [
+    { label: "全電商", unit: pxUnit },
+    ...PLATFORM_ORDER
+      .filter(p => platformMap[p.key])
+      .map(p => ({ label: p.label, unit: platformMap[p.key].unitPrice }))
+  ].sort((a, b) => a.unit - b.unit);
+
+  const rank     = all.findIndex(p => p.label === "全電商") + 1;
+  const total    = all.length;
+  const cheapest = all[0].unit;
+  const diff     = pxUnit - cheapest;
+
+  if (rank === 1) {
+    return { badge: "win",   title: "最低價",
+             detail: "單價第 " + rank + " / " + total + "，建議投廣告" };
   }
-  if (data.url) {
-    return `<td class="col-price">` +
-      `<a href="${escHtml(data.url)}" target="_blank" title="${escHtml(data.title)}" style="color:${color};">` +
-      `${escHtml(data.text)} <span style="font-size:11px;opacity:0.55;">↗</span>` +
-      `</a></td>`;
+  if (rank === 2) {
+    return { badge: "close", title: "居中",
+             detail: "單價第 " + rank + " / " + total + "，較最低貴 NT$" + diff + "/盒" };
   }
-  return `<td class="col-price" style="color:#bbb;">${escHtml(data.text)}</td>`;
+  return { badge: "lose", title: "偏高",
+           detail: "單價第 " + rank + " / " + total + "，較最低貴 NT$" + diff + "/盒，建議議價" };
 }
 
-// ---- Build suggestion ----
-function buildSuggestion(pxPrice, momoData, shopeeData) {
-  const mo = momoData?.price  ?? null;
-  const sh = shopeeData?.price ?? null;
-
-  if (mo === null && sh === null) {
-    return `<span class="badge badge-miss">無競品資料</span>`;
-  }
-
-  const competitorPrices = [mo, sh].filter(n => n !== null);
-  const compLowest  = Math.min(...competitorPrices);
-  const compHighest = Math.max(...competitorPrices);
-
-  if (pxPrice !== null) {
-    if (pxPrice < compLowest) {
-      return `<span class="badge badge-win">✅ 全電商最低</span> 低於最低競品 NT$${compLowest - pxPrice}`;
-    }
-    if (pxPrice === compLowest) {
-      return `<span class="badge badge-win">✅ 並列最低</span>`;
-    }
-    if (pxPrice <= compHighest) {
-      return `<span class="badge badge-close">🟡 居中</span> 較最低競品高 NT$${pxPrice - compLowest}`;
-    }
-    return `<span class="badge badge-lose">🔴 全電商偏高</span> 高於最低競品 NT$${pxPrice - compLowest}`;
-  }
-
-  // No PX price: compare momo vs shopee
-  if (mo !== null && sh !== null) {
-    const diff = Math.abs(mo - sh);
-    if (diff <= 30) return `<span class="badge badge-close">🟡 兩平台相近</span>`;
-    if (mo > sh)    return `蝦皮較低，低 momo <strong>NT$${diff}</strong>`;
-    return `momo 較低，低蝦皮 <strong>NT$${diff}</strong>`;
-  }
-  return `<span class="badge badge-close">僅一平台有資料</span>`;
-}
-
+// ---- 渲染 ----
 function escHtml(s) {
   return String(s)
     .replace(/&/g, "&amp;")
@@ -460,7 +457,50 @@ function escHtml(s) {
     .replace(/"/g, "&quot;");
 }
 
-// ---- Main search flow ----
+function renderPxCell(product) {
+  if (product.pxUnit === null) {
+    return '<td><span class="no-data">—</span></td>';
+  }
+  return '<td>' +
+    '<div class="unit-price unit-px">NT$' + product.pxUnit.toLocaleString() + '</div>' +
+    '<div class="unit-sub">' + product.boxCount + '盒 NT$' + product.pxTotal.toLocaleString() + '</div>' +
+    '</td>';
+}
+
+function renderPlatformCell(data) {
+  if (!data) return '<td><span class="no-data">—</span></td>';
+  return '<td>' +
+    '<div class="unit-price">NT$' + data.unitPrice.toLocaleString() + '</div>' +
+    '<div class="unit-sub">' + data.boxCount + '盒 NT$' + data.totalPrice.toLocaleString() + '</div>' +
+    '</td>';
+}
+
+function renderCompCell(comp) {
+  if (!comp) {
+    return '<td><span class="badge badge-miss">未輸入全電商售價</span></td>';
+  }
+  const icon = { win: "🟢", close: "🟡", lose: "🔴" }[comp.badge];
+  return '<td>' +
+    '<span class="badge badge-' + comp.badge + '">' + icon + ' ' + escHtml(comp.title) + '</span>' +
+    '<div class="suggest-detail">' + escHtml(comp.detail) + '</div>' +
+    '</td>';
+}
+
+function skeletonRow(product, idx) {
+  const tr = document.createElement("tr");
+  tr.id = "row-" + idx;
+  tr.innerHTML =
+    '<td class="col-name">' + escHtml(product.name) + '</td>' +
+    renderPxCell(product) +
+    '<td><div class="skeleton"></div></td>' +
+    '<td><div class="skeleton"></div></td>' +
+    '<td><div class="skeleton"></div></td>' +
+    '<td><div class="skeleton"></div></td>' +
+    '<td><div class="skeleton"></div></td>';
+  return tr;
+}
+
+// ---- 主流程 ----
 async function startSearch() {
   const text = productInput.value.trim();
   if (!text) { alert("請輸入至少一個商品名稱"); return; }
@@ -472,60 +512,35 @@ async function startSearch() {
   searchBtn.textContent = "搜尋中...";
   showScreen("result");
 
-  const hasAnyPx = products.some(p => p.pxPrice !== null);
-  const now = new Date();
-  resultTime.textContent = `搜尋時間：${now.toLocaleString("zh-TW")}`;
-
-  // Table header
-  let headers = ["商品名稱"];
-  if (hasAnyPx) headers.push("全電商售價");
-  headers.push("momo 售價", "蝦皮 售價", "比較建議");
-  tableHeader.innerHTML = headers.map(h => `<th>${h}</th>`).join("");
-
-  // Skeleton rows
+  resultTime.textContent = "搜尋時間：" + new Date().toLocaleString("zh-TW");
+  progressFill.style.width = "0%";
   tableBody.innerHTML = "";
-  products.forEach((p, idx) => {
-    const tr = document.createElement("tr");
-    tr.id = "row-" + idx;
-    let cells = `<td class="col-name">${escHtml(p.name)}</td>`;
-    if (hasAnyPx) {
-      cells += `<td class="col-px">${p.pxPrice !== null ? "NT$" + p.pxPrice.toLocaleString() : "<span class='no-price'>—</span>"}</td>`;
-    }
-    cells += `<td><div class="skeleton"></div></td>`;
-    cells += `<td><div class="skeleton"></div></td>`;
-    cells += `<td><div class="skeleton"></div></td>`;
-    tr.innerHTML = cells;
-    tableBody.appendChild(tr);
-  });
+  products.forEach((p, idx) => tableBody.appendChild(skeletonRow(p, idx)));
 
-  // Search sequentially (momo + shopee in parallel per product)
-  let done = 0;
   for (let idx = 0; idx < products.length; idx++) {
     const product = products[idx];
-    progressText.textContent = `搜尋中：${product.name}（${idx + 1} / ${products.length}）`;
+    progressText.textContent = "搜尋中：" + product.name + "（" + (idx + 1) + " / " + products.length + "）";
+    progressFill.style.width = ((idx + 0.3) / products.length * 100) + "%";
 
-    const [momoResult, shopeeResult] = await Promise.all([
-      searchPlatform(product.name, "momo"),
-      searchPlatform(product.name, "shopee")
-    ]);
+    const raw         = await searchBigGo(product.name);
+    const platformMap = buildPlatformMap(raw);
+    const comp        = buildCompetition(product.pxUnit, platformMap);
 
-    done++;
-    progressFill.style.width = `${(done / products.length) * 100}%`;
+    progressFill.style.width = ((idx + 1) / products.length * 100) + "%";
 
-    // Update row
     const tr = document.getElementById("row-" + idx);
     if (!tr) continue;
-    let cells = `<td class="col-name">${escHtml(product.name)}</td>`;
-    if (hasAnyPx) {
-      cells += `<td class="col-px">${product.pxPrice !== null ? "NT$" + product.pxPrice.toLocaleString() : "<span class='no-price'>—</span>"}</td>`;
-    }
-    cells += priceCell(momoResult, "#e40520");
-    cells += priceCell(shopeeResult, "#ee4d2d");
-    cells += `<td class="col-suggest">${buildSuggestion(product.pxPrice, momoResult, shopeeResult)}</td>`;
-    tr.innerHTML = cells;
+    tr.innerHTML =
+      '<td class="col-name">' + escHtml(product.name) + '</td>' +
+      renderPxCell(product) +
+      renderPlatformCell(platformMap["momo"]) +
+      renderPlatformCell(platformMap["pchome"]) +
+      renderPlatformCell(platformMap["yahoo"]) +
+      renderPlatformCell(platformMap["shopee_mall"]) +
+      renderCompCell(comp);
   }
 
-  progressText.textContent = `✅ 完成，共搜尋 ${products.length} 個商品（消耗約 ${products.length * 2} Credits）`;
+  progressText.textContent = "✅ 完成，共 " + products.length + " 個商品（消耗約 " + (products.length * 5) + " Credits）";
   searchBtn.disabled = false;
   searchBtn.textContent = "開始搜尋";
 }
