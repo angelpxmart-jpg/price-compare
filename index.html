@@ -407,11 +407,14 @@ function parseProducts(text) {
     .filter(p => p.name);
 }
 
-// ---- BigGo API（透過 Vercel 中繼）----
+// ---- BigGo API（直接呼叫，支援 CORS）----
 async function searchBigGo(productName) {
   const query = stripBoxCount(productName);
   try {
-    const resp = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+    const resp = await fetch(
+      `https://api.biggo.com/api/v1/spa/search/${encodeURIComponent(query)}/product`,
+      { headers: { "site": "biggo.com.tw", "region": "tw" } }
+    );
     if (!resp.ok) throw new Error("HTTP " + resp.status);
     const data = await resp.json();
     return data.list || [];
