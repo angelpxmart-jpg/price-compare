@@ -398,11 +398,11 @@ function parseProducts(text) {
         name    = namePart.trim();
         pxTotal = parseInt(pricePart.trim().replace(/[^0-9]/g, ""), 10);
       } else {
-        // 自動偵測結尾的售價（支援 $3,318 或 3318 格式）
-        const priceMatch = l.match(/\$?\s*([\d,]+)\s*$/);
+        // 自動偵測結尾的售價（支援 NT$3,318 / $3,318 / 3318 格式）
+        const priceMatch = l.match(/(?:NT)?\$?\s*([\d,]+)\s*$/i);
         if (priceMatch) {
           pxTotal = parseInt(priceMatch[1].replace(/,/g, ""), 10);
-          name    = l.slice(0, l.lastIndexOf(priceMatch[0])).trim();
+          name    = l.slice(0, l.length - priceMatch[0].length).trim();
         } else {
           name    = l;
           pxTotal = null;
