@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         waitFor: 5000,
         proxy: "stealth",
         jsonOptions: {
-          prompt: "Extract all product listings from this momo search results page. Return an array called 'products' where each item has: name (product title), price (the final selling price as a number, after any discount shown)"
+          prompt: "Extract all product listings from this momo search results page. Return an array called 'products' where each item has: name (product title), price (the final selling price as a number, after any discount shown), url (the full product page URL)"
         }
       })
     });
