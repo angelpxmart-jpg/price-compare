@@ -396,7 +396,7 @@ function parseProducts(text) {
         // 格式：商品名稱|售價
         const [namePart, pricePart] = l.split("|");
         name    = namePart.trim();
-        pxTotal = parseInt(pricePart.trim().replace(/[,$\s]/g, ""), 10);
+        pxTotal = parseInt(pricePart.trim().replace(/[^0-9]/g, ""), 10);
       } else {
         // 自動偵測結尾的售價（支援 $3,318 或 3318 格式）
         const priceMatch = l.match(/\$?\s*([\d,]+)\s*$/);
