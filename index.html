@@ -424,6 +424,32 @@ async function searchBigGo(productName) {
   }
 }
 
+// ---- momo API（透過 Vercel 函數爬取）----
+async function searchMomo(productName, boxCount) {
+  const query = stripBoxCount(productName);
+  try {
+    const resp = await fetch(`/api/momo?q=${encodeURIComponent(query)}`);
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    const products = data.products || [];
+
+    let best = null;
+    for (const p of products) {
+      if (!p.price) continue;
+      const m = (p.name || "").match(/[xX×]?\s*(\d+)\s*[入盒]/);
+      const pBoxCount = m ? parseInt(m[1]) : (boxCount || 1);
+      const unitPrice = Math.round(p.price / Math.max(pBoxCount, 1));
+      if (!best || unitPrice < best.unitPrice) {
+        best = { unitPrice, totalPrice: p.price, boxCount: pBoxCount, productName: p.name };
+      }
+    }
+    return best;
+  } catch (err) {
+    console.error("momo error:", err);
+    return null;
+  }
+}
+
 // ---- 轉換為平台 Map（每平台取最低單價）----
 function buildPlatformMap(items) {
   const map = {};
@@ -585,8 +611,12 @@ async function startSearch() {
     progressText.textContent = "搜尋中：" + product.name + "（" + (idx + 1) + " / " + products.length + "）";
     progressFill.style.width = ((idx + 0.3) / products.length * 100) + "%";
 
-    const raw         = await searchBigGo(product.name);
+    const [raw, momoData] = await Promise.all([
+      searchBigGo(product.name),
+      searchMomo(product.name, product.boxCount)
+    ]);
     const platformMap = buildPlatformMap(raw);
+    if (momoData) platformMap.momo = momoData;
     const comp        = buildCompetition(product.pxUnit, platformMap);
 
     allResults.push({ platformMap, comp });
